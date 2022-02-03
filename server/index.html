@@ -46,11 +46,11 @@
         const ip = '10.168.241.46';
 
         const services = [
-          { name: 'cors-anywhere', port: 81, isActive: false, content: '' },
-          { name: 'pgadmin', port: 90, isActive: false, content: 'admin@admin.com ; admin' },
-          { name: 'lab-back-symfony', port: 82, isActive: false, content: '' },
-          { name: 'lab-front-symfony', port: 83, isActive: false, content: '' },
-          { name: 'lab-back-node', port: 84, isActive: false, content: '' },
+          { name: 'cors-anywhere', port: 81, isActive: true, content: '' },
+          { name: 'pgadmin', port: 90, isActive: true, content: 'admin@admin.com ; admin' },
+          { name: 'lab-back-symfony', port: 82, isActive: true, content: '' },
+          { name: 'lab-front-symfony', port: 83, isActive: true, content: '' },
+          { name: 'lab-back-node', port: 84, isActive: true, content: '' },
         ];
 
         Alpine.data('provider', () => ({
