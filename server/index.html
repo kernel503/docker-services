@@ -10,7 +10,7 @@
   <body>
     <section class="section pt-0 mt-1" x-data="provider">
       <p class="has-text-centered is-size-1" x-text="ip"></p>
-      <div class="container mx-6">
+      <div class="container mt-3">
         <div class="columns is-multiline">
           <template x-for="service in services">
             <div class="column is-one-quarter">
@@ -29,9 +29,6 @@
                     <div class="content" x-text="service.content"></div>
                   </template>
                 </div>
-                <footer class="card-footer">
-                  <a class="card-footer-item" @click="remoto(service.port)">Remoto</a>
-                </footer>
               </div>
             </div>
           </template>
@@ -46,6 +43,9 @@
         const services = [
           { name: 'cors-anywhere', port: 81, isActive: false, content: '' },
           { name: 'pgadmin', port: 90, isActive: false, content: 'admin@admin.com ; admin' },
+          { name: 'lab-back-symfony', port: 82, isActive: false, content: '' },
+          { name: 'lab-front-symfony', port: 83, isActive: false, content: '' },
+          { name: 'lab-back-node', port: 84, isActive: false, content: '' },
         ];
 
         Alpine.data('provider', () => ({
@@ -73,11 +73,8 @@
           services,
 
           open(port) {
-            window.open(`http://localhost:${port}`, '_blank', 'noreferrer noopener');
-          },
-
-          remoto(port) {
-            window.open(`http://${ip}:${port}`, '_blank', 'noreferrer noopener');
+            const origin = window.location.origin;
+            window.open(`${origin}:${port}`, '_blank', 'noreferrer noopener');
           },
         }));
       });
