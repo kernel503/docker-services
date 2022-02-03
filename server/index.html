@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>WS!</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css" />
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+  </head>
+  <body>
+    <section class="section pt-0 mt-1" x-data="provider">
+      <p class="has-text-centered is-size-1" x-text="ip"></p>
+      <div class="container mx-6">
+        <div class="columns is-multiline">
+          <template x-for="service in services">
+            <div class="column is-one-quarter">
+              <div class="card" @click="open(service.port)">
+                <div
+                  class="card-content"
+                  :class="service.isActive ? 'has-background-link-light' : 'has-background-danger-light'"
+                >
+                  <div class="media">
+                    <div class="media-content">
+                      <p class="title is-4 mb-1" x-text="service.name"></p>
+                      <p class="title is-6" x-text="service.port"></p>
+                    </div>
+                  </div>
+                  <template x-if="service.content">
+                    <div class="content" x-text="service.content"></div>
+                  </template>
+                </div>
+                <footer class="card-footer">
+                  <a class="card-footer-item" @click="remoto(service.port)">Remoto</a>
+                </footer>
+              </div>
+            </div>
+          </template>
+        </div>
+      </div>
+    </section>
+
+    <script>
+      document.addEventListener('alpine:init', () => {
+        const ip = '10.168.241.46';
+
+        const services = [
+          { name: 'cors-anywhere', port: 81, isActive: false, content: '' },
+          { name: 'pgadmin', port: 90, isActive: false, content: 'admin@admin.com ; admin' },
+        ];
+
+        Alpine.data('provider', () => ({
+          init() {
+            const urls = this.services.map(({ port }) => {
+              if (port === 81) {
+                return fetch(`http://${this.ip}:81`).then((response) => response);
+              }
+              return fetch(`http://${this.ip}:81/http://${this.ip}:${port}`).then((response) => response);
+            });
+
+            const fetchServiceStatus = async () => {
+              let index = 0;
+              for await (const response of urls) {
+                this.services[index].isActive = response.status === 200;
+                index++;
+              }
+            };
+
+            fetchServiceStatus();
+          },
+
+          ip,
+
+          services,
+
+          open(port) {
+            window.open(`http://localhost:${port}`, '_blank', 'noreferrer noopener');
+          },
+
+          remoto(port) {
+            window.open(`http://${ip}:${port}`, '_blank', 'noreferrer noopener');
+          },
+        }));
+      });
+    </script>
+  </body>
+</html>

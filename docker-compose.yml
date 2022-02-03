@@ -1,0 +1,35 @@
+version: '3.7'
+services:
+  pgadmin:
+    restart: always
+    container_name: pgadmin
+    image: dpage/pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@admin.com
+      PGADMIN_DEFAULT_PASSWORD: admin
+    volumes:
+      - pgadmin:/var/lib/pgadmin
+    ports:
+      - 90:80
+  nginx:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: always
+    container_name: nginx
+    image: nginx
+    ports:
+      - 80:80
+    volumes:
+      - ./logs:/var/log/nginx
+      - ./server:/usr/share/nginx/server
+  
+  cors-anywhere:
+    restart: always
+    container_name: cors-anywhere
+    image: testcab/cors-anywhere 
+    ports:
+      - 81:8080
+volumes:
+  .:
+  pgadmin:
