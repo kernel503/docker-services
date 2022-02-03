@@ -6,6 +6,11 @@
     <title>WS!</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css" />
     <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <style>
+      .card:hover {
+        box-shadow: 0 0.5em 1em 0.25em rgba(22, 22, 22, 0.1), 0 0 0 6px hsla(0, 5%, 21%, 0.1);
+      }
+    </style>
   </head>
   <body>
     <section class="section pt-0 mt-1" x-data="provider">
@@ -21,8 +26,8 @@
                 >
                   <div class="media">
                     <div class="media-content">
-                      <p class="title is-4 mb-1" x-text="service.name"></p>
-                      <p class="title is-6" x-text="service.port"></p>
+                      <p class="title is-3 mb-1" x-text="service.name"></p>
+                      <p class="title is-5" x-text="service.port"></p>
                     </div>
                   </div>
                   <template x-if="service.content">
