@@ -48,9 +48,11 @@
         const services = [
           { name: 'cors-anywhere', port: 81, isActive: true, content: '' },
           { name: 'pgadmin', port: 90, isActive: true, content: 'admin@admin.com ; admin' },
-          { name: 'lab-back-symfony', port: 82, isActive: true, content: '' },
-          { name: 'lab-front-symfony', port: 83, isActive: true, content: '' },
+          { name: 'lab-back-sym', port: 82, isActive: true, content: '' },
+          { name: 'lab-front-vue', port: 83, isActive: true, content: '' },
           { name: 'lab-back-node', port: 84, isActive: true, content: '' },
+          { name: 'lab-dev', port: 4040, isActive: true, content: '' },
+          { name: 'lab-prod', port: 4545, isActive: true, content: '' },
         ];
 
         Alpine.data('provider', () => ({
@@ -62,6 +64,8 @@
               return fetch(`http://${this.ip}:81/http://${this.ip}:${port}`).then((response) => response);
             });
 
+            console.log(urls);
+
             const fetchServiceStatus = async () => {
               let index = 0;
               for await (const response of urls) {
@@ -69,7 +73,6 @@
                 index++;
               }
             };
-
             fetchServiceStatus();
           },
 
